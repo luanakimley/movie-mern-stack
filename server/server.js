@@ -2,7 +2,7 @@
 require(`dotenv`).config({ path: `./config/.env` });
 
 // Database
-// require(`./config/db`);
+require(`./config/db`);
 
 // Express
 const express = require(`express`);
@@ -12,7 +12,7 @@ app.use(require(`body-parser`).json());
 app.use(require(`cors`)({ credentials: true, origin: process.env.LOCAL_HOST }));
 
 // Routers
-app.use(require(`./routes/cars`));
+app.use(require(`./routes/movies`));
 
 // Port
 app.listen(process.env.SERVER_PORT, () => {

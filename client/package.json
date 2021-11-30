@@ -35,5 +35,8 @@
   "description": "Example using Server-side routing",
   "main": "index.js",
   "author": "Derek O Reilly",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "sass": "^1.44.0"
+  }
 }

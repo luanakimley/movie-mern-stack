@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-mongoose.connect(`mongodb://localhost/${process.env.DBCARS}`, {
+mongoose.connect(`mongodb://localhost/${process.env.DB_NAME}`, {
   useNewUrlParser: true,
   useFindAndModify: false,
   useCreateIndex: true,
