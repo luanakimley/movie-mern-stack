@@ -18,7 +18,7 @@ export default class AddCar extends Component {
       actors: "",
       plot: "",
       posterUrl: "",
-      redirectToDisplayAllMovies: false,
+      redirectToHome: false,
     };
   }
 
@@ -50,7 +50,7 @@ export default class AddCar extends Component {
           console.log(res.data.errorMessage);
         } else {
           console.log("Record added");
-          this.setState({ redirectToDisplayAllMovies: true });
+          this.setState({ redirectToHome: true });
         }
       } else {
         console.log("Record not added");
@@ -61,9 +61,7 @@ export default class AddCar extends Component {
   render() {
     return (
       <div className="form-container">
-        {this.state.redirectToDisplayAllMovies ? (
-          <Redirect to="/DisplayAllMovies" />
-        ) : null}
+        {this.state.redirectToHome ? <Redirect to="/Home" /> : null}
 
         <Form>
           <Form.Group controlId="title">
@@ -115,7 +113,7 @@ export default class AddCar extends Component {
             onClick={this.handleSubmit}
           />
 
-          <Link className="btn btn-danger" to={"/DisplayAllMovies"}>
+          <Link className="btn btn-danger" to={"/Home"}>
             Cancel
           </Link>
         </Form>

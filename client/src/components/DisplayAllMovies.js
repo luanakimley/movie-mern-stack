@@ -32,18 +32,20 @@ export default class DisplayAllMovies extends Component {
 
   render() {
     return (
-      <section id="hero" className="d-flex align-items-center">
-        <div className="container position-relative">
-          <Link className="btn btn-primary" to={"/AddMovie"}>
+      <div className="container movies-container">
+        <div className="movie-cont-head">
+          <h2>All Movies</h2>
+          <Link className="btn btn-light" to={"/AddMovie"}>
             Add New Movie
           </Link>
-          <div className="row icon-boxes">
-            {this.state.movies.map((movie) => (
-              <MoviesBox key={movie._id} movie={movie} />
-            ))}
-          </div>
         </div>
-      </section>
+
+        <div className="row icon-boxes">
+          {this.state.movies.map((movie) => (
+            <MoviesBox key={movie._id} movie={movie} />
+          ))}
+        </div>
+      </div>
     );
   }
 }
