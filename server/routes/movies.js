@@ -30,4 +30,15 @@ router.delete(`/movies/:id`, (req, res) => {
   });
 });
 
+// Update one record
+router.put(`/movies/:id`, (req, res) => {
+  moviesModel.findByIdAndUpdate(
+    req.params.id,
+    { $set: req.body },
+    (error, data) => {
+      res.json(data);
+    }
+  );
+});
+
 module.exports = router;

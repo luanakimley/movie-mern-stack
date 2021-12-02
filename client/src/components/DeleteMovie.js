@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
 
 import { SERVER_HOST } from "../config/global_constants";
 
@@ -49,7 +48,13 @@ export default class DeleteMovie extends Component {
               console.log("Record not deleted");
             }
           });
-        Swal.fire("Deleted!", "The movie has been deleted.", "success");
+        MySwal.fire({
+          title: "Deleted!",
+          text: "The movie has been deleted.",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       } else {
         this.setState({ redirectToHome: true });
       }

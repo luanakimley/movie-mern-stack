@@ -29,10 +29,12 @@ export default class MoviesBox extends Component {
             </p>
           </div>
           <div className="icon-box__icon">
-            <Link to={"/DeleteMovie/" + this.props.movie._id}>
-              <Trash color="#123c69" size={20} />
+            <Link to={"/EditMovie/" + this.props.movie._id}>
+              <Pencil className="mr-2" color="#123c69" size={20} />
             </Link>
-            <Link></Link>
+            <Link to={"/DeleteMovie/" + this.props.movie._id}>
+              <Trash className="mr-1" color="#123c69" size={20} />
+            </Link>
           </div>
         </div>
       </div>

@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import { Redirect, Link } from "react-router-dom";
 import axios from "axios";
 import { SERVER_HOST } from "../config/global_constants";
-import Form from "react-bootstrap/Form";
+import { Form, Row, Col, Button, InputGroup } from "react-bootstrap";
+import Swal from "sweetalert2";
+import { XLg } from "react-bootstrap-icons";
 
-export default class AddCar extends Component {
+export default class AddMovie extends Component {
   constructor(props) {
     super(props);
 
@@ -12,6 +14,7 @@ export default class AddCar extends Component {
       title: "",
       year: "",
       runtime: "",
+      selectedGenre: "",
       genres: [],
       director: "",
       actors: "",
@@ -27,6 +30,23 @@ export default class AddCar extends Component {
 
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
+  };
+
+  addGenre = (e) => {
+    if (
+      this.state.selectedGenre !== "" &&
+      !this.state.genres.includes(this.state.selectedGenre)
+    ) {
+      this.setState({
+        genres: [...this.state.genres, this.state.selectedGenre],
+      });
+    }
+  };
+
+  removeGenre = (e) => {
+    this.setState({
+      genres: this.state.genres.filter((g) => g !== e.currentTarget.dataset.id),
+    });
   };
 
   handleSubmit = (e) => {
@@ -51,6 +71,13 @@ export default class AddCar extends Component {
           console.log("Record added");
           this.setState({ redirectToHome: true });
         }
+        Swal.fire({
+          title: "Record Added",
+          text: "The movie has been added.",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       } else {
         console.log("Record not added");
       }
@@ -58,8 +85,37 @@ export default class AddCar extends Component {
   };
 
   render() {
+    const genres = [
+      "Action",
+      "Adventure",
+      "Animation",
+      "Biography",
+      "Comedy",
+      "Crime",
+      "Documentary",
+      "Drama",
+      "Family",
+      "Fantasy",
+      "Film-Noir",
+      "Game-Show",
+      "History",
+      "Horror",
+      "Music",
+      "Musical",
+      "Mystery",
+      "News",
+      "Reality-TV",
+      "Romance",
+      "Sci-Fi",
+      "Sport",
+      "Talk-Show",
+      "Thriller",
+      "War",
+      "Western",
+    ];
+
     return (
-      <div id="addForm">
+      <div id="form">
         <h2>Add New Movie</h2>
         <div className="form-container">
           {this.state.redirectToHome ? <Redirect to="/Home" /> : null}
@@ -78,22 +134,74 @@ export default class AddCar extends Component {
               />
             </Form.Group>
 
-            <Form.Group controlId="year">
-              <Form.Label>Year</Form.Label>
-              <Form.Control
-                type="text"
-                name="year"
-                value={this.state.year}
-                onChange={this.handleChange}
-              />
+            <Row className="g-2">
+              <Col md>
+                <Form.Group controlId="year">
+                  <Form.Label>Year</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="year"
+                    value={this.state.year}
+                    onChange={this.handleChange}
+                  />
+                </Form.Group>
+              </Col>
+              <Col md>
+                <Form.Group controlId="runtime">
+                  <Form.Label>Runtime</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="runtime"
+                    value={this.state.runtime}
+                    onChange={this.handleChange}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Form.Group controlId="genres">
+              <Form.Label>Genres</Form.Label>
+
+              <InputGroup>
+                <Form.Control
+                  name="selectedGenre"
+                  as="select"
+                  onChange={this.handleChange}
+                  defaultValue={"DEFAULT"}
+                >
+                  <option value="DEFAULT" disabled>
+                    Select genre...
+                  </option>
+                  {genres
+                    .filter((g) => !this.state.genres.includes(g))
+                    .map((g) => (
+                      <option key={g} value={g}>
+                        {g}
+                      </option>
+                    ))}
+                </Form.Control>
+
+                <Button onClick={this.addGenre}>Add Genre</Button>
+              </InputGroup>
+              {this.state.genres.map((g) => (
+                <span className="badge badge-secondary p-1 mt-2 mr-2" key={g}>
+                  {g}
+                  <XLg
+                    data-id={g}
+                    className="ml-1"
+                    onClick={this.removeGenre}
+                  />
+                </span>
+              ))}
             </Form.Group>
 
-            <Form.Group controlId="runtime">
-              <Form.Label>Runtime</Form.Label>
+            <Form.Group controlId="plot">
+              <Form.Label>Plot</Form.Label>
               <Form.Control
                 type="text"
-                name="runtime"
-                value={this.state.runtime}
+                name="plot"
+                as="textarea"
+                value={this.state.plot}
                 onChange={this.handleChange}
               />
             </Form.Group>
@@ -108,9 +216,22 @@ export default class AddCar extends Component {
               />
             </Form.Group>
 
-            <Link className="btn btn-success mr-2" onClick={this.handleSubmit}>
+            <Form.Group controlId="actors">
+              <Form.Label>Actors</Form.Label>
+              <Form.Control
+                type="text"
+                name="actors"
+                value={this.state.actors}
+                onChange={this.handleChange}
+              />
+            </Form.Group>
+
+            <button
+              className="btn btn-success mr-2"
+              onClick={this.handleSubmit}
+            >
               Add
-            </Link>
+            </button>
 
             <Link className="btn btn-danger ml-2" to={"/Home"}>
               Cancel
