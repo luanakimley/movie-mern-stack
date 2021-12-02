@@ -23,4 +23,11 @@ router.post(`/movies`, (req, res) => {
   });
 });
 
+// Delete one record
+router.delete(`/movies/:id`, (req, res) => {
+  moviesModel.findByIdAndRemove(req.params.id, (error, data) => {
+    res.json(data);
+  });
+});
+
 module.exports = router;

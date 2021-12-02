@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { CameraReels } from "react-bootstrap-icons";
 
 export default class NavBar extends Component {
   constructor(props) {
@@ -12,18 +13,17 @@ export default class NavBar extends Component {
       <div>
         <header id="header" className="fixed-top">
           <div className="container d-flex align-items-center justify-content-between">
-            <h1 className="logo">Movies Collection</h1>
+            <div className="d-flex flex-direction-row ">
+              <CameraReels color="#123c69" size={40} />
+              <h1 className="ml-3">Movies Collection</h1>
+            </div>
             <nav id="navbar" className="navbar">
               <ul>
                 <li>
-                  <Link to="/">
-                    <a className="nav-link scrollto active">Home</a>
-                  </Link>
+                  <Link to="/">Home</Link>
                 </li>
                 <li>
-                  <Link to="/">
-                    <a className="nav-link scrollto">Review</a>
-                  </Link>
+                  <Link to="/">Review</Link>
                 </li>
                 <i className="bi bi-list mobile-nav-toggle"></i>
               </ul>

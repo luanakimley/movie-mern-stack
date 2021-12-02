@@ -3,7 +3,6 @@ import { Redirect, Link } from "react-router-dom";
 import axios from "axios";
 import { SERVER_HOST } from "../config/global_constants";
 import Form from "react-bootstrap/Form";
-import LinkInClass from "./LinkInClass";
 
 export default class AddCar extends Component {
   constructor(props) {
@@ -60,63 +59,64 @@ export default class AddCar extends Component {
 
   render() {
     return (
-      <div className="form-container">
-        {this.state.redirectToHome ? <Redirect to="/Home" /> : null}
+      <div id="addForm">
+        <h2>Add New Movie</h2>
+        <div className="form-container">
+          {this.state.redirectToHome ? <Redirect to="/Home" /> : null}
 
-        <Form>
-          <Form.Group controlId="title">
-            <Form.Label>Title</Form.Label>
-            <Form.Control
-              ref={(input) => {
-                this.inputToFocus = input;
-              }}
-              type="text"
-              name="title"
-              value={this.state.title}
-              onChange={this.handleChange}
-            />
-          </Form.Group>
+          <Form>
+            <Form.Group controlId="title">
+              <Form.Label>Title</Form.Label>
+              <Form.Control
+                ref={(input) => {
+                  this.inputToFocus = input;
+                }}
+                type="text"
+                name="title"
+                value={this.state.title}
+                onChange={this.handleChange}
+              />
+            </Form.Group>
 
-          <Form.Group controlId="year">
-            <Form.Label>Year</Form.Label>
-            <Form.Control
-              type="text"
-              name="year"
-              value={this.state.year}
-              onChange={this.handleChange}
-            />
-          </Form.Group>
+            <Form.Group controlId="year">
+              <Form.Label>Year</Form.Label>
+              <Form.Control
+                type="text"
+                name="year"
+                value={this.state.year}
+                onChange={this.handleChange}
+              />
+            </Form.Group>
 
-          <Form.Group controlId="runtime">
-            <Form.Label>Runtime</Form.Label>
-            <Form.Control
-              type="text"
-              name="runtime"
-              value={this.state.runtime}
-              onChange={this.handleChange}
-            />
-          </Form.Group>
+            <Form.Group controlId="runtime">
+              <Form.Label>Runtime</Form.Label>
+              <Form.Control
+                type="text"
+                name="runtime"
+                value={this.state.runtime}
+                onChange={this.handleChange}
+              />
+            </Form.Group>
 
-          <Form.Group controlId="director">
-            <Form.Label>Director</Form.Label>
-            <Form.Control
-              type="text"
-              name="director"
-              value={this.state.director}
-              onChange={this.handleChange}
-            />
-          </Form.Group>
+            <Form.Group controlId="director">
+              <Form.Label>Director</Form.Label>
+              <Form.Control
+                type="text"
+                name="director"
+                value={this.state.director}
+                onChange={this.handleChange}
+              />
+            </Form.Group>
 
-          <LinkInClass
-            value="Add"
-            className="btn btn-success"
-            onClick={this.handleSubmit}
-          />
+            <Link className="btn btn-success mr-2" onClick={this.handleSubmit}>
+              Add
+            </Link>
 
-          <Link className="btn btn-danger" to={"/Home"}>
-            Cancel
-          </Link>
-        </Form>
+            <Link className="btn btn-danger ml-2" to={"/Home"}>
+              Cancel
+            </Link>
+          </Form>
+        </div>
       </div>
     );
   }

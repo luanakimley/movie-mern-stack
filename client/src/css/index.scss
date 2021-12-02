@@ -24,16 +24,6 @@ body {
   background-color: $pink !important;
 }
 
-a {
-  color: #2487ce;
-  text-decoration: none;
-}
-
-a:hover {
-  color: #469fdf;
-  text-decoration: none;
-}
-
 h1,
 h2,
 h3,
@@ -44,60 +34,6 @@ h6 {
   color: $darkblue;
 }
 
-/*--------------------------------------------------------------
-# Preloader
---------------------------------------------------------------*/
-#preloader {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 9999;
-  overflow: hidden;
-  background: #fff;
-}
-
-#preloader:before {
-  content: "";
-  position: fixed;
-  top: calc(50% - 30px);
-  left: calc(50% - 30px);
-  border: 6px solid #2487ce;
-  border-top-color: #fff;
-  border-bottom-color: #fff;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  -webkit-animation: animate-preloader 1s linear infinite;
-  animation: animate-preloader 1s linear infinite;
-}
-
-@-webkit-keyframes animate-preloader {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes animate-preloader {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-/*--------------------------------------------------------------
-# Disable aos animation delay on mobile devices
---------------------------------------------------------------*/
-@media screen and (max-width: 768px) {
-  [data-aos-delay] {
-    transition-delay: 0 !important;
-  }
-}
 /*--------------------------------------------------------------
 # Header
 --------------------------------------------------------------*/
@@ -113,24 +49,9 @@ h6 {
   box-shadow: 0px 2px 15px rgba(18, 66, 101, 0.08);
 }
 
-#header .logo {
-  font-size: 40px;
-  margin: 0;
-  padding: 0;
-  line-height: 1;
-  font-weight: 300;
-  letter-spacing: 0.5px;
-}
-#header .logo a {
-  color: $darkblue;
-  text-decoration: none;
-}
-#header .logo img {
-  max-height: 40px;
-}
 @media (max-width: 992px) {
   #header .logo {
-    font-size: 28px;
+    font-size: 36px;
   }
 }
 
@@ -344,32 +265,16 @@ h6 {
   display: block;
 }
 
-/*--------------------------------------------------------------
-# Hero Section
---------------------------------------------------------------*/
-#hero {
-  width: 100%;
-  position: relative;
-  background-size: cover;
-  position: relative;
-}
-#hero:before {
-  content: "";
-  background: $pink;
-  position: absolute;
-  bottom: 0;
-  top: 0;
-  left: 0;
-  right: 0;
-}
-
 h1 {
   margin: 0;
   font-size: 56px;
   font-weight: 700;
   line-height: 72px;
-  color: $magenta;
 }
+
+/*--------------------------------------------------------------
+# Home
+--------------------------------------------------------------*/
 
 #home {
   margin-top: 100px !important;
@@ -381,11 +286,13 @@ h1 {
   padding: 10px;
   border-radius: 8px;
   width: 65vw !important;
+  margin-bottom: 60px;
 }
 
 .movie-cont-head {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 20px;
   h2 {
     color: $offwhite;
@@ -432,51 +339,15 @@ h1 {
 
 .btn {
   font-family: $bodyFont;
-  padding: 0;
 }
 
-.icon-box .title {
-  font-weight: 700;
-  margin-bottom: 15px;
-  font-size: 18px;
-}
-.icon-box .title a {
-  color: $darkblue;
-  transition: 0.3s;
-}
-.icon-box .description {
-  font-size: 15px;
-  line-height: 28px;
-  margin-bottom: 0;
-}
-.icon-box .icon {
-  margin-bottom: 20px;
-  padding-top: 10px;
-  display: inline-block;
-  transition: all 0.3s ease-in-out;
-  font-size: 36px;
-  line-height: 1;
-  color: #2487ce;
-}
 .icon-box:hover {
   transform: scale(1.03);
 }
-.icon-box:hover .title a {
-  color: $darkblue;
-}
-@media (min-width: 1024px) {
-  #hero {
-    background-attachment: fixed;
-  }
-}
-@media (max-height: 800px) {
-  #hero {
-    height: auto;
-  }
-}
+
 @media (max-width: 600px) {
   .movies-container {
-    margin-top: 80px !important;
+    margin-top: 100px !important;
     width: 85vw !important;
   }
 
@@ -504,5 +375,18 @@ h1 {
 
   .icon-box:hover {
     transform: scale(1.03);
+  }
+}
+
+/*--------------------------------------------------------------
+# Forms
+--------------------------------------------------------------*/
+#addForm {
+  margin-top: 120px !important;
+
+  h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: $magenta;
   }
 }
