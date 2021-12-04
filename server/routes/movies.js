@@ -23,6 +23,13 @@ router.post(`/movies`, (req, res) => {
   });
 });
 
+// Add new dataset
+router.post(`/movies`, (req, res) => {
+  moviesModel.insertMany(req.body, (error, data) => {
+    res.json(data);
+  });
+});
+
 // Delete one record
 router.delete(`/movies/:id`, (req, res) => {
   moviesModel.findByIdAndRemove(req.params.id, (error, data) => {

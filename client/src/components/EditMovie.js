@@ -5,6 +5,7 @@ import { SERVER_HOST } from "../config/global_constants";
 import { Form, Row, Col, Button, InputGroup } from "react-bootstrap";
 import Swal from "sweetalert2";
 import { XLg } from "react-bootstrap-icons";
+import FileBase64 from "react-file-base64";
 
 export default class EditMovie extends Component {
   constructor(props) {
@@ -246,6 +247,30 @@ export default class EditMovie extends Component {
                 value={this.state.actors}
                 onChange={this.handleChange}
               />
+            </Form.Group>
+
+            <Form.Group>
+              <Form.Label>Poster</Form.Label>
+              <Row>
+                <Col md>
+                  <Form.Control
+                    type="text"
+                    name="posterUrl"
+                    value={this.state.posterUrl}
+                    onChange={this.handleChange}
+                    placeholder="Enter poster link"
+                  />
+                </Col>{" "}
+                or
+                <Col md>
+                  <FileBase64
+                    multiple={false}
+                    onDone={({ base64 }) =>
+                      this.setState({ posterUrl: base64 })
+                    }
+                  />
+                </Col>
+              </Row>
             </Form.Group>
 
             <button

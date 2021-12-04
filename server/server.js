@@ -8,7 +8,8 @@ require(`./config/db`);
 const express = require(`express`);
 const app = express();
 
-app.use(require(`body-parser`).json());
+app.use(require(`body-parser`).json({ limit: "50mb" }));
+
 app.use(require(`cors`)({ credentials: true, origin: process.env.LOCAL_HOST }));
 
 // Routers

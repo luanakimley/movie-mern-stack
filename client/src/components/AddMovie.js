@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { Redirect, Link } from "react-router-dom";
+import { Form, Row, Col, Button, InputGroup } from "react-bootstrap";
+import { XLg } from "react-bootstrap-icons";
 import axios from "axios";
 import { SERVER_HOST } from "../config/global_constants";
-import { Form, Row, Col, Button, InputGroup } from "react-bootstrap";
 import Swal from "sweetalert2";
-import { XLg } from "react-bootstrap-icons";
+import FileBase64 from "react-file-base64";
 
 export default class AddMovie extends Component {
   constructor(props) {
@@ -20,14 +21,13 @@ export default class AddMovie extends Component {
       actors: "",
       plot: "",
       posterUrl: "",
+      dataset: "",
       redirectToHome: false,
     };
   }
-
   componentDidMount() {
     this.inputToFocus.focus();
   }
-
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -61,6 +61,7 @@ export default class AddMovie extends Component {
       actors: this.state.actors,
       plot: this.state.plot,
       posterUrl: this.state.posterUrl,
+      image: this.state.image,
     };
 
     axios.post(`${SERVER_HOST}/movies`, movieObject).then((res) => {
@@ -69,17 +70,24 @@ export default class AddMovie extends Component {
           console.log(res.data.errorMessage);
         } else {
           console.log("Record added");
+          Swal.fire({
+            title: "Record Added",
+            text: "The movie has been added.",
+            icon: "success",
+            showConfirmButton: false,
+            timer: 1500,
+          });
           this.setState({ redirectToHome: true });
         }
-        Swal.fire({
-          title: "Record Added",
-          text: "The movie has been added.",
-          icon: "success",
-          showConfirmButton: false,
-          timer: 1500,
-        });
       } else {
         console.log("Record not added");
+        Swal.fire({
+          title: "Records Not Added",
+          text: "Make sure that data is valid and is not a duplicate.",
+          icon: "error",
+          showConfirmButton: true,
+          confirmButtonColor: "#123c69",
+        });
       }
     });
   };
@@ -116,10 +124,24 @@ export default class AddMovie extends Component {
 
     return (
       <div id="form">
-        <h2>Add New Movie</h2>
+        <div className="text-center mb-5">
+          <Link
+            className="badge badge-light badge-pill mr-5 p-2"
+            to={"/AddMovie"}
+          >
+            Add one movie
+          </Link>
+          or
+          <Link
+            className="badge badge-light badge-pill ml-5 p-2"
+            to={"/AddMovieDataset"}
+          >
+            Add movie dataset
+          </Link>
+        </div>
+        {this.state.redirectToHome ? <Redirect to="/Home" /> : null}
+        <h2>Add One Movie</h2>
         <div className="form-container">
-          {this.state.redirectToHome ? <Redirect to="/Home" /> : null}
-
           <Form>
             <Form.Group controlId="title">
               <Form.Label>Title</Form.Label>
@@ -181,7 +203,9 @@ export default class AddMovie extends Component {
                     ))}
                 </Form.Control>
 
-                <Button onClick={this.addGenre}>Add Genre</Button>
+                <Button variant="outline-secondary" onClick={this.addGenre}>
+                  Add Genre
+                </Button>
               </InputGroup>
               {this.state.genres.map((g) => (
                 <span className="badge badge-secondary p-1 mt-2 mr-2" key={g}>
@@ -224,6 +248,30 @@ export default class AddMovie extends Component {
                 value={this.state.actors}
                 onChange={this.handleChange}
               />
+            </Form.Group>
+
+            <Form.Group controlId="posterUrl">
+              <Form.Label>Poster</Form.Label>
+              <Row>
+                <Col md>
+                  <Form.Control
+                    type="text"
+                    name="posterUrl"
+                    value={this.state.posterUrl}
+                    onChange={this.handleChange}
+                    placeholder="Enter poster link"
+                  />
+                </Col>{" "}
+                or
+                <Col md>
+                  <FileBase64
+                    multiple={false}
+                    onDone={({ base64 }) =>
+                      this.setState({ posterUrl: base64 })
+                    }
+                  />
+                </Col>
+              </Row>
             </Form.Group>
 
             <button
