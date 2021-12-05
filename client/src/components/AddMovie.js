@@ -261,7 +261,7 @@ export default class AddMovie extends Component {
                     onChange={this.handleChange}
                     placeholder="Enter poster link"
                   />
-                </Col>{" "}
+                </Col>
                 or
                 <Col md>
                   <FileBase64

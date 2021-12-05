@@ -87,7 +87,7 @@ export default class AddMovieDataset extends Component {
         <div className="form-container">
           <Form>
             <Form.Group>
-              <Form.Label>Dataset Url</Form.Label>
+              <Form.Label>Dataset URL</Form.Label>
               <Form.Control
                 ref={(input) => {
                   this.inputToFocus = input;

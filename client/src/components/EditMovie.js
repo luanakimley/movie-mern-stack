@@ -92,15 +92,15 @@ export default class EditMovie extends Component {
             console.log(res.data.errorMessage);
           } else {
             console.log("Record updated");
+            Swal.fire({
+              title: "Record updated",
+              text: "The movie details have been updated.",
+              icon: "success",
+              showConfirmButton: false,
+              timer: 1500,
+            });
             this.setState({ redirectToHome: true });
           }
-          Swal.fire({
-            title: "Record updated",
-            text: "The movie details have been updated.",
-            icon: "success",
-            showConfirmButton: false,
-            timer: 1500,
-          });
         } else {
           console.log("Record not updated");
         }
@@ -204,7 +204,9 @@ export default class EditMovie extends Component {
                     ))}
                 </Form.Control>
 
-                <Button onClick={this.addGenre}>Add Genre</Button>
+                <Button variant="outline-secondary" onClick={this.addGenre}>
+                  Add Genre
+                </Button>
               </InputGroup>
               {this.state.genres.map((g) => (
                 <span className="badge badge-secondary p-1 mt-2 mr-2" key={g}>

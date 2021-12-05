@@ -18,9 +18,16 @@ router.get(`/movies/:id`, (req, res) => {
 
 // Add new record
 router.post(`/movies`, (req, res) => {
-  moviesModel.create(req.body, (error, data) => {
-    res.json(data);
-  });
+  const today = new Date();
+  if (req.body.year < 1800 || req.body.year > today.getFullYear()) {
+    res.json({ errorMessage: `Year must be between 1800 and this year.` });
+  } else if (req.body.runtime <= 0) {
+    res.json({ errorMessage: `Runtime must be a positive number.` });
+  } else {
+    moviesModel.create(req.body, (error, data) => {
+      res.json(data);
+    });
+  }
 });
 
 // Add new dataset
@@ -39,13 +46,20 @@ router.delete(`/movies/:id`, (req, res) => {
 
 // Update one record
 router.put(`/movies/:id`, (req, res) => {
-  moviesModel.findByIdAndUpdate(
-    req.params.id,
-    { $set: req.body },
-    (error, data) => {
-      res.json(data);
-    }
-  );
+  const today = new Date();
+  if (req.body.year < 1800 || req.body.year > today.getFullYear()) {
+    res.json({ errorMessage: `Year must be between 1800 and this year.` });
+  } else if (req.body.runtime <= 0) {
+    res.json({ errorMessage: `Runtime must be a positive number.` });
+  } else {
+    moviesModel.findByIdAndUpdate(
+      req.params.id,
+      { $set: req.body },
+      (error, data) => {
+        res.json(data);
+      }
+    );
+  }
 });
 
 module.exports = router;

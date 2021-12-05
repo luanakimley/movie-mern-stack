@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import MoviesBox from "./MoviesBox";
+import { EmojiFrown } from "react-bootstrap-icons";
 
 import axios from "axios";
 
@@ -41,9 +42,16 @@ export default class DisplayAllMovies extends Component {
         </div>
 
         <div className="row icon-boxes">
-          {this.state.movies.map((movie) => (
-            <MoviesBox key={movie._id} movie={movie} />
-          ))}
+          {this.state.movies.length > 0 ? (
+            this.state.movies.map((movie) => (
+              <MoviesBox key={movie._id} movie={movie} />
+            ))
+          ) : (
+            <div className="text-center">
+              <EmojiFrown className="mt-2" size="50" color="white" />
+              <h3 className="mt-3 text-light">No records found</h3>
+            </div>
+          )}
         </div>
       </div>
     );
