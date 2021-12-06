@@ -12,10 +12,12 @@ export default class AddMovieDataset extends Component {
       redirectToHome: false,
       datasetUrl: "",
       dataset: "",
+      datasetJson: "",
     };
   }
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
+    console.log(this.state.datasetJson);
   };
 
   componentDidMount() {
@@ -25,12 +27,31 @@ export default class AddMovieDataset extends Component {
   handleSubmitDataset = (e) => {
     e.preventDefault();
 
-    const movieArray = this.state.dataset;
+    let movieArray = null;
+
+    this.state.datasetUrl.length > 0
+      ? (movieArray = this.state.dataset)
+      : (movieArray = JSON.parse(this.state.datasetJson));
 
     axios.post(`${SERVER_HOST}/movies`, movieArray).then((res) => {
-      if (res.data) {
+      if (movieArray === undefined || movieArray.length <= 0) {
+        Swal.fire({
+          title: "Records Not Added",
+          text: "Make sure that data is valid and is not a duplicate.",
+          icon: "error",
+          confirmButtonColor: "#123c69",
+          showConfirmButton: true,
+        });
+      } else if (res.data) {
         if (res.data.errorMessage) {
           console.log(res.data.errorMessage);
+          Swal.fire({
+            title: "Records Not Added",
+            text: "Make sure that data is valid and is not a duplicate.",
+            icon: "error",
+            confirmButtonColor: "#123c69",
+            showConfirmButton: true,
+          });
         } else {
           console.log("Records added");
           Swal.fire({
@@ -43,14 +64,15 @@ export default class AddMovieDataset extends Component {
           this.setState({ redirectToHome: true });
         }
       } else {
-        console.log("Records not added");
+        console.log("Records added");
         Swal.fire({
-          title: "Records Not Added",
-          text: "Make sure that data is valid and is not a duplicate.",
-          icon: "error",
-          confirmButtonColor: "#123c69",
-          showConfirmButton: true,
+          title: "Records Added",
+          text: "Movie dataset has been added.",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1500,
         });
+        this.setState({ redirectToHome: true });
       }
     });
   };
@@ -96,6 +118,18 @@ export default class AddMovieDataset extends Component {
                 name="datasetUrl"
                 value={this.state.datasetUrl}
                 onChange={this.handleChange}
+              />
+            </Form.Group>
+            <p className="text-center"></p>
+            <Form.Group>
+              <Form.Label>or copy and paste array of JSON here</Form.Label>
+              <Form.Control
+                type="text"
+                name="datasetJson"
+                value={this.state.datasetJson}
+                onChange={this.handleChange}
+                as="textarea"
+                style={{ height: 400 }}
               />
             </Form.Group>
             <button

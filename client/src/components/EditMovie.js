@@ -103,6 +103,13 @@ export default class EditMovie extends Component {
           }
         } else {
           console.log("Record not updated");
+          Swal.fire({
+            title: "Records Not Updated",
+            text: "Make sure that data is valid and is not a duplicate.",
+            icon: "error",
+            confirmButtonColor: "#123c69",
+            showConfirmButton: true,
+          });
         }
       });
   };
