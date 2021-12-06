@@ -19,20 +19,16 @@ router.get(`/movies/:id`, (req, res) => {
 // Add new record
 router.post(`/movies`, (req, res) => {
   const today = new Date();
-  if (req.body.title.length <= 0) {
+  if (req.body.title === "") {
     res.json({ errorMessage: `Title is required.` });
   } else if (req.body.year < 1800 || req.body.year > today.getFullYear()) {
     res.json({ errorMessage: `Year must be between 1800 and this year.` });
   } else if (req.body.runtime <= 0) {
     res.json({ errorMessage: `Runtime must be a positive number.` });
-  } else if (req.body.genres.length <= 0) {
-    res.json({ errorMessage: `Choose at least 1 genre.` });
-  } else if (req.body.plot.length <= 0) {
-    res.json({ errorMessage: `Plot is required.` });
-  } else if (req.body.director.length <= 0) {
-    res.json({ errorMessage: `Director name is required.` });
-  } else if (req.body.actors.length <= 0) {
-    res.json({ errorMessage: `Actors name is required.` });
+  } else if (!/^[a-zA-Z\s,]+$/.test(req.body.director)) {
+    res.json({ errorMessage: `Director must be a string.` });
+  } else if (!/^[a-zA-Z\s,]+$/.test(req.body.actors)) {
+    res.json({ errorMessage: `Actors must be a string.` });
   } else {
     moviesModel.create(req.body, (error, data) => {
       res.json(data);
@@ -57,20 +53,16 @@ router.delete(`/movies/:id`, (req, res) => {
 // Update one record
 router.put(`/movies/:id`, (req, res) => {
   const today = new Date();
-  if (req.body.title.length <= 0) {
+  if (req.body.title === "") {
     res.json({ errorMessage: `Title is required.` });
   } else if (req.body.year < 1800 || req.body.year > today.getFullYear()) {
     res.json({ errorMessage: `Year must be between 1800 and this year.` });
   } else if (req.body.runtime <= 0) {
     res.json({ errorMessage: `Runtime must be a positive number.` });
-  } else if (req.body.genres.length <= 0) {
-    res.json({ errorMessage: `Choose at least 1 genre.` });
-  } else if (req.body.plot.length <= 0) {
-    res.json({ errorMessage: `Plot is required.` });
   } else if (!/^[a-zA-Z\s,]+$/.test(req.body.director)) {
-    res.json({ errorMessage: `Director name must be a string.` });
+    res.json({ errorMessage: `Director must be a string.` });
   } else if (!/^[a-zA-Z\s,]+$/.test(req.body.actors)) {
-    res.json({ errorMessage: `Actors name must be a string.` });
+    res.json({ errorMessage: `Actors must be a string.` });
   } else {
     moviesModel.findByIdAndUpdate(
       req.params.id,

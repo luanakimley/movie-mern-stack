@@ -49,6 +49,47 @@ export default class AddMovie extends Component {
     });
   };
 
+  validateTitle() {
+    return this.state.title !== "";
+  }
+
+  validateYear() {
+    const today = new Date();
+    return this.state.year >= 1800 && this.state.year <= today.getFullYear();
+  }
+
+  validateRuntime() {
+    return this.state.runtime > 0;
+  }
+
+  validateGenres() {
+    return this.state.genres.length !== 0 && this.state.genres !== undefined;
+  }
+
+  validatePlot() {
+    return this.state.plot !== "";
+  }
+
+  validateDirector() {
+    return /^[a-zA-Z\s,]+$/.test(this.state.director);
+  }
+
+  validateActors() {
+    return /^[a-zA-Z\s,]+$/.test(this.state.actors);
+  }
+
+  validate() {
+    return {
+      title: this.validateTitle(),
+      year: this.validateYear(),
+      runtime: this.validateYear(),
+      genres: this.validateGenres(),
+      plot: this.validatePlot(),
+      director: this.validateDirector(),
+      actors: this.validateActors(),
+    };
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
 
@@ -61,7 +102,6 @@ export default class AddMovie extends Component {
       actors: this.state.actors,
       plot: this.state.plot,
       posterUrl: this.state.posterUrl,
-      image: this.state.image,
     };
 
     axios.post(`${SERVER_HOST}/movies`, movieObject).then((res) => {
@@ -93,6 +133,53 @@ export default class AddMovie extends Component {
   };
 
   render() {
+    const formInputsState = this.validate();
+    const inputsAreAllValid = Object.keys(formInputsState).every(
+      (index) => formInputsState[index]
+    );
+
+    let titleError = "";
+    let yearError = "";
+    let runtimeError = "";
+    let genresError = "";
+    let plotError = "";
+    let directorError = "";
+    let actorsError = "";
+
+    if (!this.validateTitle()) {
+      titleError = <p className="text-danger mt-2">Title is required.</p>;
+    }
+    if (!this.validateYear()) {
+      yearError = (
+        <p className="text-danger mt-2">
+          Year must be between 1800 and this year.
+        </p>
+      );
+    }
+    if (!this.validateRuntime()) {
+      runtimeError = (
+        <p className="text-danger mt-2">Runtime must be a positive number.</p>
+      );
+    }
+    if (!this.validateGenres()) {
+      genresError = (
+        <p className="text-danger mt-2">Choose at least 1 genre.</p>
+      );
+    }
+    if (!this.validatePlot()) {
+      plotError = <p className="text-danger mt-2">Plot is required.</p>;
+    }
+    if (!this.validateDirector()) {
+      directorError = (
+        <p className="text-danger mt-2">Director must be a string.</p>
+      );
+    }
+    if (!this.validateActors()) {
+      actorsError = (
+        <p className="text-danger mt-2">Actors must be a string.</p>
+      );
+    }
+
     const genres = [
       "Action",
       "Adventure",
@@ -139,7 +226,9 @@ export default class AddMovie extends Component {
             Add movie dataset
           </Link>
         </div>
+
         {this.state.redirectToHome ? <Redirect to="/Home" /> : null}
+
         <h2>Add One Movie</h2>
         <div className="form-container">
           <Form>
@@ -153,7 +242,8 @@ export default class AddMovie extends Component {
                 name="title"
                 value={this.state.title}
                 onChange={this.handleChange}
-              />
+              />{" "}
+              {titleError}
             </Form.Group>
 
             <Row className="g-2">
@@ -165,7 +255,8 @@ export default class AddMovie extends Component {
                     name="year"
                     value={this.state.year}
                     onChange={this.handleChange}
-                  />
+                  />{" "}
+                  {yearError}
                 </Form.Group>
               </Col>
               <Col md>
@@ -176,14 +267,14 @@ export default class AddMovie extends Component {
                     name="runtime"
                     value={this.state.runtime}
                     onChange={this.handleChange}
-                  />
+                  />{" "}
+                  {runtimeError}
                 </Form.Group>
               </Col>
             </Row>
 
             <Form.Group controlId="genres">
               <Form.Label>Genres</Form.Label>
-
               <InputGroup>
                 <Form.Control
                   name="selectedGenre"
@@ -216,7 +307,8 @@ export default class AddMovie extends Component {
                     onClick={this.removeGenre}
                   />
                 </span>
-              ))}
+              ))}{" "}
+              {genresError}
             </Form.Group>
 
             <Form.Group controlId="plot">
@@ -227,7 +319,8 @@ export default class AddMovie extends Component {
                 as="textarea"
                 value={this.state.plot}
                 onChange={this.handleChange}
-              />
+              />{" "}
+              {plotError}
             </Form.Group>
 
             <Form.Group controlId="director">
@@ -237,7 +330,8 @@ export default class AddMovie extends Component {
                 name="director"
                 value={this.state.director}
                 onChange={this.handleChange}
-              />
+              />{" "}
+              {directorError}
             </Form.Group>
 
             <Form.Group controlId="actors">
@@ -247,7 +341,8 @@ export default class AddMovie extends Component {
                 name="actors"
                 value={this.state.actors}
                 onChange={this.handleChange}
-              />
+              />{" "}
+              {actorsError}
             </Form.Group>
 
             <Form.Group controlId="posterUrl">
@@ -277,6 +372,7 @@ export default class AddMovie extends Component {
             <button
               className="btn btn-success mr-2"
               onClick={this.handleSubmit}
+              disabled={!inputsAreAllValid}
             >
               Add
             </button>
