@@ -23,7 +23,11 @@ export default class MoviesBox extends Component {
             <p>
               {this.props.movie.runtime} min -
               {this.props.movie.genres.map((g, i, l) =>
-                i + 1 === l.length ? <span> {g} </span> : <span> {g} |</span>
+                i + 1 === l.length ? (
+                  <span key={g}> {g} </span>
+                ) : (
+                  <span key={g}> {g} |</span>
+                )
               )}
             </p>
             <p>{this.props.movie.plot}</p>

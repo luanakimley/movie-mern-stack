@@ -1,77 +1,19 @@
 const router = require(`express`).Router();
 
-const moviesModel = require(`../models/movies`);
+const {
+  getAllMovies,
+  getOneMovie,
+  addMovie,
+  addMovieDataset,
+  deleteMovie,
+  updateMovie,
+} = require("../controllers/movies");
 
-// read all records
-router.get(`/movies`, (req, res) => {
-  moviesModel.find((error, data) => {
-    res.json(data);
-  });
-});
-
-// Read one record
-router.get(`/movies/:id`, (req, res) => {
-  moviesModel.findById(req.params.id, (error, data) => {
-    res.json(data);
-  });
-});
-
-// Add new record
-router.post(`/movies`, (req, res) => {
-  const today = new Date();
-  if (req.body.title === "") {
-    res.json({ errorMessage: `Title is required.` });
-  } else if (req.body.year < 1800 || req.body.year > today.getFullYear()) {
-    res.json({ errorMessage: `Year must be between 1800 and this year.` });
-  } else if (req.body.runtime <= 0) {
-    res.json({ errorMessage: `Runtime must be a positive number.` });
-  } else if (!/^[a-zA-Z\s,]+$/.test(req.body.director)) {
-    res.json({ errorMessage: `Director must be a string.` });
-  } else if (!/^[a-zA-Z\s,]+$/.test(req.body.actors)) {
-    res.json({ errorMessage: `Actors must be a string.` });
-  } else {
-    moviesModel.create(req.body, (error, data) => {
-      res.json(data);
-    });
-  }
-});
-
-// Add new dataset
-router.post(`/movies`, (req, res) => {
-  moviesModel.insertMany(req.body, (error, data) => {
-    res.json(data);
-  });
-});
-
-// Delete one record
-router.delete(`/movies/:id`, (req, res) => {
-  moviesModel.findByIdAndRemove(req.params.id, (error, data) => {
-    res.json(data);
-  });
-});
-
-// Update one record
-router.put(`/movies/:id`, (req, res) => {
-  const today = new Date();
-  if (req.body.title === "") {
-    res.json({ errorMessage: `Title is required.` });
-  } else if (req.body.year < 1800 || req.body.year > today.getFullYear()) {
-    res.json({ errorMessage: `Year must be between 1800 and this year.` });
-  } else if (req.body.runtime <= 0) {
-    res.json({ errorMessage: `Runtime must be a positive number.` });
-  } else if (!/^[a-zA-Z\s,]+$/.test(req.body.director)) {
-    res.json({ errorMessage: `Director must be a string.` });
-  } else if (!/^[a-zA-Z\s,]+$/.test(req.body.actors)) {
-    res.json({ errorMessage: `Actors must be a string.` });
-  } else {
-    moviesModel.findByIdAndUpdate(
-      req.params.id,
-      { $set: req.body },
-      (error, data) => {
-        res.json(data);
-      }
-    );
-  }
-});
+router.get(`/movies`, getAllMovies);
+router.get(`/movies/:id`, getOneMovie);
+router.post(`/movies`, addMovie);
+router.post(`/movies`, addMovieDataset);
+router.delete(`/movies/:id`, deleteMovie);
+router.put(`/movies/:id`, updateMovie);
 
 module.exports = router;

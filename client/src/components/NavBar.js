@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component } from "react";
 import { CameraReels } from "react-bootstrap-icons";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 import { SERVER_HOST } from "../config/global_constants";

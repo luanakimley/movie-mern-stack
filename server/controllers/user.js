@@ -1,7 +1,6 @@
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const { OAuth2Client } = require("google-auth-library");
-const { response } = require("express");
 
 const client = new OAuth2Client(
   "374142562845-rrr3sqtq0c25ocgonbe25lebn4258gut.apps.googleusercontent.com"
@@ -64,6 +63,4 @@ exports.googlelogin = (req, res) => {
         });
       }
     });
-
-  console.log();
 };

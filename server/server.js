@@ -6,7 +6,6 @@ require(`./config/db`);
 
 // Express
 const express = require(`express`);
-const router = require("./routes/movies");
 const app = express();
 
 const cors = require("cors");
