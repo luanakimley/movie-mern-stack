@@ -18,7 +18,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // Middlewares
-const authRoutes = require("./routes/auth");
+const authRoutes = require("./routes/user");
 app.use(express.json());
 app.use("/api", authRoutes);
 

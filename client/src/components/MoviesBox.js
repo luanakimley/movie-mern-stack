@@ -7,7 +7,15 @@ export default class MoviesBox extends Component {
     return (
       <div className="d-flex position-relative" key={this.props.movie.id}>
         <div className="icon-box">
-          <img src={this.props.movie.posterUrl} alt={this.props.movie.title} />
+          <img
+            src={this.props.movie.posterUrl}
+            alt={this.props.movie.title}
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src =
+                "https://i.ibb.co/Fgv6xhb/image-not-available-png-8.png";
+            }}
+          />
           <div className="icon-box__text">
             <h3>
               {this.props.movie.title} ({this.props.movie.year})
