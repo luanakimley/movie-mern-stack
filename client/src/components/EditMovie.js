@@ -18,7 +18,7 @@ export default class EditMovie extends Component {
       director: "",
       actors: "",
       plot: "",
-      posterUrl: "",
+      posterUrl: "https://i.ibb.co/Fgv6xhb/image-not-available-png-8.png",
       redirectToHome: false,
       selectedGenre: "",
     };

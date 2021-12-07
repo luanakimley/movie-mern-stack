@@ -6,11 +6,23 @@ require(`./config/db`);
 
 // Express
 const express = require(`express`);
+const router = require("./routes/movies");
 const app = express();
 
-app.use(require(`body-parser`).json({ limit: "50mb" }));
+const cors = require("cors");
+const corsOptions = {
+  origin: "http://localhost:3000",
+  credentials: true, //access-control-allow-credentials:true
+  optionSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
 
-app.use(require(`cors`)({ credentials: true, origin: process.env.LOCAL_HOST }));
+// Middlewares
+const authRoutes = require("./routes/auth");
+app.use(express.json());
+app.use("/api", authRoutes);
+
+app.use(require(`body-parser`).json({ limit: "50mb" }));
 
 // Routers
 app.use(require(`./routes/movies`));

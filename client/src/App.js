@@ -10,6 +10,8 @@ import NavBar from "./components/NavBar";
 import DeleteMovie from "./components/DeleteMovie";
 import EditMovie from "./components/EditMovie";
 import AddMovieDataset from "./components/AddMovieDataset";
+import ProtectedRoute from "./components/ProtectedRoute";
+import MustLogIn from "./components/MustLogIn";
 
 export default class App extends Component {
   render() {
@@ -18,11 +20,20 @@ export default class App extends Component {
         <NavBar />
         <Switch>
           <Route exact path="/" component={DisplayAllMovies} />
+          <Route exact path="/MustLogIn" component={MustLogIn} />
           <Route exact path="/Home" component={DisplayAllMovies} />
-          <Route exact path="/AddMovie" component={AddMovie} />
-          <Route exact path="/AddMovieDataset" component={AddMovieDataset} />
-          <Route exact path="/DeleteMovie/:id" component={DeleteMovie} />
-          <Route exact path="/EditMovie/:id" component={EditMovie} />
+          <ProtectedRoute exact path="/AddMovie" component={AddMovie} />
+          <ProtectedRoute
+            exact
+            path="/AddMovieDataset"
+            component={AddMovieDataset}
+          />
+          <ProtectedRoute
+            exact
+            path="/DeleteMovie/:id"
+            component={DeleteMovie}
+          />
+          <ProtectedRoute exact path="/EditMovie/:id" component={EditMovie} />
         </Switch>
       </BrowserRouter>
     );
