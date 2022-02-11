@@ -29,7 +29,7 @@ export default class AddMovieDataset extends Component {
 
     let movieArray = null;
 
-    this.state.datasetUrl.length > 0
+    this.state.datasetUrl !== "" && this.state.datasetJson === ""
       ? (movieArray = this.state.dataset)
       : (movieArray = JSON.parse(this.state.datasetJson));
 
